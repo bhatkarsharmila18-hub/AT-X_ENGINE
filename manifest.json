@@ -10,22 +10,10 @@
   "theme_color": "#06090e",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%2306090e'/%3E%3Crect x='30' y='30' width='452' height='452' rx='60' fill='none' stroke='%2300f0ff' stroke-width='16'/%3E%3Cpath d='M256 50 v412 M50 256 h412' stroke='%2300f0ff' stroke-width='2' opacity='0.25'/%3E%3Ctext x='50%25' y='46%25' fill='%23ffffff' font-family='sans-serif' font-weight='900' font-size='130' text-anchor='middle' dominant-baseline='central'%3EAT-X%3C/text%3E%3Ctext x='50%25' y='68%25' fill='%2300f0ff' font-family='monospace' font-weight='700' font-size='42' letter-spacing='6' text-anchor='middle' dominant-baseline='central'%3EENGINE%3C/text%3E%3C/svg%3E",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }
