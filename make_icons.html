@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AT-X Icon Generator</title>
+  <style>
+    body {
+      background: #06090e;
+      color: #00f0ff;
+      font-family: system-ui, sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+    canvas {
+      border: 2px solid #00f0ff;
+      border-radius: 20px;
+      margin: 15px 0;
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    button {
+      background: #00f0ff;
+      color: #06090e;
+      border: none;
+      padding: 12px 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>AT-X Icon Generator</h2>
+  <canvas id="iconCanvas" width="512" height="512"></canvas>
+
+  <div class="btn-group">
+    <button onclick="downloadIcon(192, false, 'icon-192.png')">⬇ Download icon-192.png</button>
+    <button onclick="downloadIcon(512, false, 'icon-512.png')">⬇ Download icon-512.png</button>
+    <button onclick="downloadIcon(512, true, 'icon-512-maskable.png')">⬇ Download icon-512-maskable.png</button>
+  </div>
+
+  <script>
+    function drawIcon(size, isMaskable) {
+      const canvas = document.getElementById('iconCanvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      // Background
+      ctx.fillStyle = '#06090e';
+      ctx.fillRect(0, 0, size, size);
+
+      // Safe zone scaling for Android adaptive maskable icons
+      const scale = isMaskable ? 0.72 : 0.88;
+      const center = size / 2;
+
+      ctx.save();
+      ctx.translate(center, center);
+
+      // Cyber Hex/Box Border
+      const boxSize = (size * scale) / 2;
+      ctx.strokeStyle = '#00f0ff';
+      ctx.lineWidth = Math.max(4, size * 0.025);
+      ctx.strokeRect(-boxSize, -boxSize, boxSize * 2, boxSize * 2);
+
+      // Glow crosshair guides
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-boxSize * 1.1, 0);
+      ctx.lineTo(boxSize * 1.1, 0);
+      ctx.moveTo(0, -boxSize * 1.1);
+      ctx.lineTo(0, boxSize * 1.1);
+      ctx.stroke();
+
+      // Main Text: AT-X
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `900 ${Math.round(size * scale * 0.35)}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.shadowColor = '#00f0ff';
+      ctx.shadowBlur = size * 0.04;
+      ctx.fillText('AT-X', 0, -size * scale * 0.05);
+
+      // Subtitle: ENGINE
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#00f0ff';
+      ctx.font = `bold ${Math.round(size * scale * 0.12)}px monospace`;
+      ctx.letterSpacing = "2px";
+      ctx.fillText('ENGINE', 0, size * scale * 0.22);
+
+      ctx.restore();
+    }
+
+    function downloadIcon(size, isMaskable, filename) {
+      drawIcon(size, isMaskable);
+      const canvas = document.getElementById('iconCanvas');
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Default preview render
+    drawIcon(512, false);
+  </script>
+</body>
+  </html>
+  
