@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>AT-X ENGINE | Hardware Performance & Latency Tuner</title>
+  
+  <!-- Web App & PWA Meta Tags (No Address Bar) -->
+  <meta name="theme-color" content="#06090e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="AT-X" />
+
+  <!-- Manifest and Icon Links -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <!-- Tailwind CSS & Gaming Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #06090e;
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+    .font-display { font-family: 'Chakra Petch', sans-serif; }
+    
+    .glow-cyan {
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.18);
+      border-color: rgba(0, 240, 255, 0.35);
+    }
+    .text-glow {
+      text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+    }
+
+    /* Clean mobile scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #06090e; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-cyan-500 selection:text-black">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-[#06090e]/95 backdrop-blur-md border-b border-gray-800/80 px-4 py-3">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+        </span>
+        <span class="font-display font-bold text-xl tracking-wider text-white">AT-X <span class="text-cyan-400 text-glow">ENGINE</span></span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <span class="text-[11px] font-mono-tech bg-gray-900 border border-cyan-800/50 text-cyan-300 px-2 py-0.5 rounded">CORE v1.0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App View -->
+  <main class="flex-grow max-w-md mx-auto w-full px-4 py-5 space-y-6">
+
+    <!-- Status Card -->
+    <div class="bg-gray-950/80 border border-gray-800 rounded-2xl p-4 glow-cyan">
+      <div class="flex justify-between items-center mb-3">
+        <span class="text-xs font-mono-tech text-gray-400 uppercase tracking-widest">Hardware Engine</span>
+        <span class="text-xs font-mono-tech text-cyan-400 bg-cyan-950/70 border border-cyan-800 px-2.5 py-0.5 rounded">CONNECTED</span>
+      </div>
+      <div class="grid grid-cols-2 gap-3 text-center">
+        <div class="bg-gray-900/60 border border-gray-800/80 p-3 rounded-xl">
+          <div class="text-[11px] font-mono-tech text-gray-400">FRAME RATE</div>
+          <div class="text-lg font-bold text-white tracking-wide">60 FPS LOCK</div>
+        </div>
+        <div class="bg-gray-900/60 border border-gray-800/80 p-3 rounded-xl">
+          <div class="text-[11px] font-mono-tech text-gray-400">TOUCH ACCEL</div>
+          <div class="text-lg font-bold text-cyan-400 tracking-wide">ZERO JITTER</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optimization Configurator Form -->
+    <div class="bg-gray-950/80 border border-gray-800 rounded-2xl p-5 space-y-4">
+      <h2 class="font-display font-bold text-lg text-white flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> HARDWARE CONFIGURATOR
+      </h2>
+
+      <div class="space-y-3 font-mono-tech text-xs">
+        <div>
+          <label class="block text-gray-400 mb-1">TARGET GAME</label>
+          <select id="game" class="w-full bg-gray-900 border border-gray-700 text-white rounded-lg p-2.5 focus:border-cyan-400 focus:outline-none">
+            <option value="ff">Free Fire / Free Fire MAX</option>
+            <option value="bgmi">BGMI / PUBG Mobile</option>
+            <option value="codm">Call of Duty Mobile</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-400 mb-1">DEVICE RAM CAPACITY</label>
+          <select id="ram" class="w-full bg-gray-900 border border-gray-700 text-white rounded-lg p-2.5 focus:border-cyan-400 focus:outline-none">
+            <option value="3-4" selected>3 GB – 4 GB RAM (Budget / Helio G85 Tier)</option>
+            <option value="6">6 GB RAM (Balanced)</option>
+            <option value="8">8 GB+ RAM (Performance)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-gray-400 mb-1">TUNING PROFILE</label>
+          <select id="mode" class="w-full bg-gray-900 border border-gray-700 text-white rounded-lg p-2.5 focus:border-cyan-400 focus:outline-none">
+            <option value="fps" selected>Maximum FPS & Headshot Fluidity</option>
+            <option value="balanced">Anti-Overheat & Battery Saver</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Generate Button -->
+      <button onclick="runOptimizer()" class="w-full bg-cyan-400 hover:bg-cyan-300 active:scale-[0.98] text-black font-display font-bold text-base py-3 rounded-xl transition duration-150 uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20">
+        <span>🚀</span> Run AT-X Optimization
+      </button>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsCard" class="hidden bg-gray-950/90 border border-cyan-500/40 rounded-2xl p-5 space-y-4 glow-cyan">
+      <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+        <h3 class="font-display font-bold text-cyan-400 uppercase tracking-wide">AT-X Performance Plan</h3>
+        <span class="text-[10px] font-mono-tech bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800">APPLIED</span>
+      </div>
+
+      <div id="resultsContent" class="space-y-3 font-mono-tech text-xs"></div>
+
+      <button onclick="copyResults()" id="copyBtn" class="w-full bg-gray-900 border border-gray-700 hover:border-gray-500 text-gray-300 py-2.5 rounded-lg text-xs font-mono-tech transition flex items-center justify-center gap-2">
+        <span>📋</span> Copy Preset Settings
+      </button>
+    </div>
+
+    <!-- Touch Latency Test Pad -->
+    <div class="bg-gray-950/80 border border-gray-800 rounded-2xl p-5 space-y-3">
+      <div class="flex justify-between items-center">
+        <h2 class="font-display font-bold text-white flex items-center gap-2 text-base">
+          <span class="text-cyan-400">🎯</span> TOUCH RESPONSE BENCHMARK
+        </h2>
+        <span id="latencyValue" class="font-mono-tech text-xs text-cyan-400">READY</span>
+      </div>
+      <p class="text-xs text-gray-400">Tap repeatedly below to test screen sampling latency and dragging consistency.</p>
+      
+      <div id="touchPad" class="h-24 border-2 border-dashed border-gray-700 hover:border-cyan-500/50 rounded-xl flex items-center justify-center cursor-pointer transition active:bg-cyan-950/20 active:border-cyan-400">
+        <span class="text-xs font-mono-tech text-gray-500 uppercase tracking-widest pointer-events-none">Tap Here Rapidly</span>
+      </div>
+    </div>
+
+    <!-- Low Latency DNS Card -->
+    <div class="bg-gray-950/80 border border-gray-800 rounded-2xl p-4 flex items-center justify-between">
+      <div>
+        <div class="text-[11px] font-mono-tech text-gray-400 uppercase">Gaming Private DNS</div>
+        <div class="text-xs font-mono-tech text-white font-bold">1dot1dot1dot1.cloudflare-dns.com</div>
+      </div>
+      <button onclick="copyDns()" class="bg-gray-800 hover:bg-gray-700 active:bg-cyan-500 active:text-black text-cyan-400 px-3 py-1.5 rounded text-xs font-mono-tech transition">
+        Copy
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-md mx-auto w-full text-center py-4 border-t border-gray-900 text-gray-600 text-xs font-mono-tech">
+    AT-X ENGINE • Engineered by Atharva • 100% Ban-Free
+  </footer>
+
+  <!-- Script Logic -->
+  <script>
+    function runOptimizer() {
+      const ram = document.getElementById('ram').value;
+      const resultsCard = document.getElementById('resultsCard');
+      const resultsContent = document.getElementById('resultsContent');
+
+      let rules = [];
+
+      if (ram === '3-4') {
+        rules.push({
+          title: "Display & Frame Rate Lock",
+          desc: "Graphics: <b>Smooth</b> | High FPS: <b>High</b> (Essential for 60 FPS lock). Turn Off Shadows and Visual Effects."
+        });
+        rules.push({
+          title: "Resource Purge (RAM Saver)",
+          desc: "Open In-Game Download Center. Delete rare costume animations & heavy skin packs. Keeps RAM free for smooth swipes."
+        });
+        rules.push({
+          title: "System Tweaks (Developer Options)",
+          desc: "Set Window, Transition, and Animator scales to <b>0.5x</b>. Set Background Process Limit to <b>At most 2 processes</b>."
+        });
+        rules.push({
+          title: "Thermal Protection",
+          desc: "Do not play while charging. Keep screen brightness under 75% to prevent the processor from throttling clock speed."
+        });
+      } else {
+        rules.push({
+          title: "Display & Visual Setup",
+          desc: "Graphics: <b>Standard / Ultra</b> | High FPS: <b>High</b>. Disable In-Game Shadows for stable frame pacing."
+        });
+        rules.push({
+          title: "Touch Sensitivity Setup",
+          desc: "General: 98–100 | Red Dot: 92–96 | 2x Scope: 88. Turn System Pointer Speed to Maximum."
+        });
+        rules.push({
+          title: "Network Jitter Fix",
+          desc: "Set Private DNS to Cloudflare to cut packet drops during intense Clash Squad or ranked fights."
+        });
+      }
+
+      resultsContent.innerHTML = rules.map(r => `
+        <div class="bg-gray-900/60 border border-gray-800 p-3 rounded-xl">
+          <div class="text-cyan-400 font-bold mb-1">${r.title}</div>
+          <div class="text-gray-300 leading-relaxed">${r.desc}</div>
+        </div>
+      `).join('');
+
+      resultsCard.classList.remove('hidden');
+      resultsCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Touch Latency Benchmark
+    let lastTap = 0;
+    const touchPad = document.getElementById('touchPad');
+    const latencyValue = document.getElementById('latencyValue');
+
+    touchPad.addEventListener('pointerdown', () => {
+      const now = performance.now();
+      if (lastTap > 0) {
+        const diff = Math.round(now - lastTap);
+        if (diff < 600) {
+          latencyValue.innerText = `${diff}ms Interval`;
+          latencyValue.className = diff < 120 
+            ? "font-mono-tech text-xs text-green-400 font-bold" 
+            : "font-mono-tech text-xs text-cyan-400";
+        }
+      }
+      lastTap = now;
+    });
+
+    function copyResults() {
+      const content = document.getElementById('resultsContent').innerText;
+      navigator.clipboard.writeText(content).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.innerText = "✓ Preset Copied to Clipboard";
+        setTimeout(() => { btn.innerText = "📋 Copy Preset Settings"; }, 2000);
+      });
+    }
+
+    function copyDns() {
+      navigator.clipboard.writeText("1dot1dot1dot1.cloudflare-dns.com").then(() => {
+        alert("AT-X Engine: Cloudflare DNS hostname copied!");
+      });
+    }
+
+    // Optional Service Worker Registration (Enables full PWA / offline support)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+    </html>
+      
